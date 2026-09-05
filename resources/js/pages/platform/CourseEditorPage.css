@@ -1,0 +1,4 @@
+.platform-field{display:grid;gap:8px;margin:22px 0;font-size:13px;font-weight:800;color:var(--navy)}
+.platform-field input,.platform-field textarea,.platform-field select{width:100%;padding:14px;border:1px solid var(--line);border-radius:12px;background:#fff;font:inherit;color:var(--ink)}
+.platform-field textarea{min-height:130px;resize:vertical}
+.editor-actions{margin-top:30px}

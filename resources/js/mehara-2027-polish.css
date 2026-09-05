@@ -1,0 +1,5 @@
+@media(max-width:520px){.meh-hero h1{font-size:39px!important;line-height:1.22!important;letter-spacing:-.025em!important}.meh-hero h1 em{display:inline-block;margin:.05em 0}.meh-hero h1 em:after{height:3px!important;bottom:-.01em!important}.meh-hero-copy>p{font-size:15px!important;line-height:1.75!important}.meh-actions .btn{padding-inline:17px!important}}
+/* One persistent language control in the global header. */
+@media(min-width:1181px){.nav{grid-template-columns:auto auto 1fr auto auto!important}}
+@media(min-width:801px) and (max-width:1180px){.nav{grid-template-columns:auto 1fr auto auto!important}}
+@media(max-width:800px){.languageroup,.language-switch{margin-inline-start:auto}.language-switch button{padding:6px 7px}.nav-cta-desktop{display:none!important}}

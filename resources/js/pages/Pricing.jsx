@@ -1,0 +1,87 @@
+import { useState } from 'react'
+import { useRouter } from '../router/Router'
+import { pricingPlans, pricingFaqs } from '../data/pricingData'
+import { PageHero } from '../components/ui/UI'
+import Reveal from '../components/Reveal'
+import { useApp } from '../context/AppContext'
+import './pages.css'
+
+export default function Pricing() {
+  const { navigate } = useRouter()
+  const { user } = useApp()
+  const [annual, setAnnual] = useState(true)
+  const [openFaq, setOpenFaq] = useState(0)
+
+  return (
+    <>
+      <PageHero eyebrow="Affordable learning" title="Plans for learners and organizations" subtitle="LYD-ready pricing for courses, applied projects and professional training. Payments remain a Phase 2 integration." />
+      <div className="page-section tight">
+        <div className="wrap">
+          <div className="billing-toggle">
+            <span className={!annual ? 'on' : ''}>Monthly</span>
+            <button
+              type="button"
+              className={`billing-switch${annual ? ' annual' : ''}`}
+              aria-pressed={annual}
+              aria-label="Toggle annual billing"
+              onClick={() => setAnnual((a) => !a)}
+            >
+              <span className="knob" />
+            </button>
+            <span className={annual ? 'on' : ''}>Annual</span>
+            {annual && <span className="save-pill">Save up to 35%</span>}
+          </div>
+
+          <Reveal className="plans-grid" stagger>
+            {pricingPlans.map((plan) => {
+              const price = annual ? plan.annual : plan.monthly
+              return (
+                <div className={`plan-card${plan.highlight ? ' highlight' : ''}`} key={plan.key}>
+                  {plan.highlight && <span className="plan-ribbon">Most popular</span>}
+                  <div className="plan-em">{plan.em}</div>
+                  <h3>{plan.title}</h3>
+                  <div className="plan-tagline">{plan.tagline}</div>
+                  <div className="plan-price">
+                    <span className="amt">{price.toFixed(0)} LYD</span>
+                    <span className="per">/ month, billed {annual ? 'annually' : 'monthly'}</span>
+                  </div>
+                  <ul className="plan-features">
+                    {plan.features.map((f) => (
+                      <li key={f}><span className="tick">✓</span>{f}</li>
+                    ))}
+                  </ul>
+                  <button
+                    className={`btn ${plan.highlight ? 'btn-primary' : 'btn-ghost'}`}
+                    onClick={() => navigate(user ? '/billing' : '/signup')}
+                  >
+                    Choose {plan.title}
+                  </button>
+                </div>
+              )
+            })}
+          </Reveal>
+
+          <Reveal><div className="sec-head related-heading"><h2>Pricing questions</h2></div></Reveal>
+          <Reveal className="acc" style={{ maxWidth: 780 }}>
+            {pricingFaqs.map((item, i) => (
+              <div className={`acc-item${openFaq === i ? ' open' : ''}`} key={item.q}>
+                <button className="acc-q" onClick={() => setOpenFaq(openFaq === i ? -1 : i)}>{item.q}</button>
+                <div className="acc-a" style={{ maxHeight: openFaq === i ? '300px' : '0' }}>
+                  <p>{item.a}</p>
+                </div>
+              </div>
+            ))}
+          </Reveal>
+
+          <Reveal className="help-support-card">
+            <div>
+              <h3>Still not sure which plan is right?</h3>
+              <p>Our team can help you choose the right path for independent learning or organizational training.</p>
+            </div>
+            <button className="btn btn-gold" onClick={() => navigate('/help')}>Talk to us</button>
+          </Reveal>
+        </div>
+      </div>
+    </>
+  )
+}
